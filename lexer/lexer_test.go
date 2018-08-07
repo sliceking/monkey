@@ -1,15 +1,15 @@
 package lexer
 
 import (
-	"testing"
 	"monkey/token"
+	"testing"
 )
 
 func TestNextToken(t *testing.T) {
 	input := `=+(){},;`
 
 	tests := []struct {
-		expectedType token.TokenType
+		expectedType    token.TokenType
 		expectedLiteral string
 	}{
 		{token.ASSIGN, "="},
@@ -23,12 +23,12 @@ func TestNextToken(t *testing.T) {
 		{token.EOF, ""},
 	}
 
-	1 := New(input)
+	l := New(input)
 
 	for i, tt := range tests {
-		tok := 1.NextToken()
+		tok := l.NextToken()
 
-		if tok.Type ~= tt.expectedType {
+		if tok.Type != tt.expectedType {
 			t.Fatalf("tests[%d] - tokentype wrong. expected=%q, got=%q",
 				i, tt.expectedType, tok.Type)
 		}
