@@ -14,7 +14,6 @@ var (
 
 func Eval(node ast.Node, env *object.Environment) object.Object {
 	switch node := node.(type) {
-	// Statements
 	case *ast.Program:
 		return evalProgram(node, env)
 	case *ast.ExpressionStatement:
@@ -41,7 +40,6 @@ func Eval(node ast.Node, env *object.Environment) object.Object {
 		return &object.Array{Elements: elements}
 	case *ast.HashLiteral:
 		return evalHashLiteral(node, env)
-	// Expressions
 	case *ast.IfExpression:
 		return evalIfExpression(node, env)
 	case *ast.IntegerLiteral:
@@ -72,7 +70,7 @@ func Eval(node ast.Node, env *object.Environment) object.Object {
 		return &object.ReturnValue{Value: val}
 	case *ast.CallExpression:
 		if node.Function.TokenLiteral() == "quote" {
-			return quote(node.Arguments[0])
+			return quote(node.Arguments[0], env)
 		}
 		function := Eval(node.Function, env)
 		if isError(function) {
